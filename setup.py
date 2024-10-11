@@ -55,7 +55,7 @@ setup(
     author="Robert Jordens, Ben Saarel, Shuqi Xu, Qian Yu, Nicole Greene, et. al.",
     url="https://github.com/Andris-Huang/bem",
     license="multiple",
-    python_requires="<3.10",
+    # python_requires="<=3.10",
     install_requires=[
                     "numpy", 
                     "pandas",
