@@ -38,11 +38,12 @@
 
 #include "mulMats.h"
 #include "mulMulti.h"
+#include "mulLocal.h"
 #include "direct.h"
 
-double **Q2P(), **Q2PAlloc();
-double **mulMulti2P(), **mulQ2Multi(), **mulMulti2Multi();
-double **mulLocal2Local(), **mulLocal2P(), **mulQ2Local(), **mulMulti2Local();
+// double **Q2P(), **Q2PAlloc();
+// double **mulMulti2P(), **mulQ2Multi(), **mulMulti2Multi();
+// double **mulLocal2Local(), **mulLocal2P(), **mulQ2Local(), **mulMulti2Local();
 
 int *localcnt, *multicnt, *evalcnt; /* counts of builds done by level */
 

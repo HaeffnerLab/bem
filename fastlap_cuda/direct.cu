@@ -36,20 +36,16 @@
 #include <stdlib.h>         // For exit() function
 
 #include "direct.h"
+#include "calcp.h"
 
 /* Allocates the direct matrix (for q to p) and fills it with calcp
  * coefficients for the left- and right-hand sides of the problem
  */
-double **Q2P(sngs,numsngs,fpts,numfpts,swapOnly,mat)
-snglrty **sngs;
-fieldpt **fpts;
-int numsngs, numfpts, swapOnly;
-double **mat;
+double **Q2P(snglrty **sngs, int numsngs, fieldpt **fpts, int numfpts, int swapOnly, double **mat)
 {
     int i, j;
     snglrty *pq;
     fieldpt *pf;
-    double calcp();
     if(swapOnly == TRUE)
             /* We've already allocated and loaded the matrix during the setup 
                  of the RHS, so we just have to recover the hidden LHS coefficients.*/
@@ -76,8 +72,7 @@ double **mat;
 /* Only allocates a matrix of identical dimension to half of
  * the direct matrix, as is needed for preconditioning.
  */
-double **Q2PAlloc(nrows,ncols)
-int nrows, ncols;
+double **Q2PAlloc(int nrows, int ncols)
 {
     double **mat;
     int i;
@@ -92,10 +87,7 @@ int nrows, ncols;
     - returned matrix has L below the diagonal, U above (GVL1 pg 58)
     - if allocate == TRUE ends up storing P and LU (could be a lot)
 */
-double **ludecomp(matin, size, allocate)
-double **matin;
-int size;
-int allocate;
+double **ludecomp(double **matin, int size, int allocate)
 {
     double factor, **mat;
     int i, j, k;
@@ -128,9 +120,7 @@ int allocate;
 /*
     For direct solution of Pq = psi, used if preconditioning.
 */
-void solve(mat, x, b, size)
-double **mat, *x, *b;
-int size;
+void solve(double **mat, double *x, double *b, int size)
 {
     int i, j;
 
@@ -239,9 +229,7 @@ void invert(double **mat, int size, int *reorder)
 Checks to see if the matrix has the M-matrix sign pattern and if
 it is diagonally dominant. 
 */
-void matcheck(mat, rows, size)
-double **mat;
-int rows, size;
+void matcheck(double **mat, int rows, int size)
 {
     double rowsum;
     int i, j;
@@ -264,10 +252,7 @@ int rows, size;
 }
 
 
-void matlabDump(mat, size, name)
-double **mat;
-int size;
-char *name;
+void matlabDump(double **mat, int size, char *name)
 {
 FILE *foo;
 int i,j;

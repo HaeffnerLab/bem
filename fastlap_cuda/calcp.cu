@@ -99,7 +99,6 @@ void initcalcp(snglrty *sing_list, int order, double* pAreas)
     snglrty *pq;
     double vtemp[3];
     double length, maxlength, minlength, length20, length31, sum, sum2, delta;
-    double normalize();
     int i, j, next;
 
     pq = sing_list;
@@ -330,8 +329,7 @@ void centroid(snglrty *pp, double x2)
     pp->z = pp->corner[0][ZI] + xc * pp->X[ZI] + yc * pp->Y[ZI];
 }
 
-double normalize(vector)
-double vector[3];
+double normalize(double vector[3])
 {
     double length;
     int i;
@@ -342,8 +340,7 @@ double vector[3];
 }
 
 // Assumes the vectors are normalized
-int If_Equal(vector1, vector2)
-double vector1[3], vector2[3];
+int If_Equal(double vector1[3], double vector2[3])
 {
     int i;
 
@@ -360,8 +357,7 @@ void Cross_Product(double vector1[], double vector2[], double result_vector[])
     result_vector[ZI] = vector1[XI]*vector2[YI] - vector1[YI]*vector2[XI];
 }
 
-double tilelength(nq)
-snglrty *nq;
+double tilelength(snglrty *nq)
 {
     return nq->max_diag;
 }
@@ -548,10 +544,7 @@ void calcSphericalPanel(snglrty *pp, double **I, int order)
     double msumc, msums, sumc, sums, sign, sqfac;
     double cosa, sina, cosb, signb, cosg, sing;
     double dplus, dminus, coeff, rcoeff, icoeff;
-    double **createBinom(), **createPmn();
-    double *createFactorial();
     int i, m, mp, n, r, halfn, halfm, flrm, ceilm, numterms, rterms;
-    double jacobid();
 
     if(order > maxorderSphere) {
         /* Allocate a temporary Multipole moments matrix, Mmn. */
@@ -764,8 +757,9 @@ void calcSphericalPanel(snglrty *pp, double **I, int order)
 
 
 /* Calculate the Euler Angles between X, Y, Z and global coordinate system. */
-static void eulerAngles(X, Y, Z, pcosa, psina, pcosb, psignb, pcosg, psing)
-double X[3], Y[3], Z[3], *pcosa, *psina, *pcosb, *psignb, *pcosg, *psing;
+static void eulerAngles(double X[3], double Y[3], double Z[3], 
+                        double *pcosa, double *psina, double *pcosb, 
+                        double *psignb, double *pcosg, double *psing)
 {
     double ypp[3], xpp[3], norm;
 
@@ -985,10 +979,10 @@ jt: modified this routine to include directional derivatives of the
         certainly not efficient, but more compatible with the rest of fastlap.
 
 */
-double calcp(sing, x, y, z, deriv, normal, pfd) /* jt: new variables */
-snglrty *sing;
-int deriv;                                      /* jt: deriv=0/1 for potential/derivative */
-double x, y, z, *normal, *pfd;                 /* jt: normal: direction of derivative */
+double calcp(snglrty *sing, double x, double y, double z, int deriv, double *normal, double *pfd) 
+/* jt: new variables */
+/* jt: deriv=0/1 for potential/derivative */
+/* jt: normal: direction of derivative */
 {
     double r[4], fe[4], xmxv[4], ymyv[4];
     double xc, yc, zc, zsq, xn, yn, zn, znabs, xsq, ysq, rsq, diagsq, dtol;

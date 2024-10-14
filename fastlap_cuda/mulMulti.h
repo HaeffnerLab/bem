@@ -14,7 +14,9 @@ int sindex(int n, int m, int cterms);
 double iPwr(int e);
 double fact(int x);
 void evalFactFac(double **array, int order);
+double **mulMulti2Multi(double x, double y, double z, double xp, double yp, double zp, int order, double **mat);
 void mulMultiAlloc(int maxsngs, int order, int depth);
+double **mulMulti2P(double x, double y, double z, fieldpt **fpts, int numfpts, int order);
 void evalLegendre(double cosA, double *vector, int order);
 double **mulQ2Multi(snglrty **sngs, int numsngs, double x, double y, double z,
                     int didthis, int order, double **mat);

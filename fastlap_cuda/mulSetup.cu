@@ -38,6 +38,7 @@
 #include <math.h>
 #include <stdlib.h>         // For exit() function
 
+#include "calcp.h"
 #include "mulSetup.h"
 #include "mulMulti.h"
 
@@ -51,11 +52,7 @@ static void getpnbrs(ssystem *sys);
 /*
  * ssystem sets up the spatial hierarchy for snglrtys and expansions.
  */
-ssystem *mulInit(autom, depth, order, snglrtys, lhsSize, rhsSize, fieldpts)
-int autom;
-int depth, order, lhsSize, rhsSize;
-snglrty *snglrtys;
-fieldpt *fieldpts;
+ssystem *mulInit(int autom, int depth, int order, snglrty *snglrtys, int lhsSize, int rhsSize, fieldpt *fieldpts)
 {
   ssystem *sys;
   int qindex=1, pindex=1, cindex=1;
@@ -128,16 +125,12 @@ fieldpt *fieldpts;
   it.  If auto depth is on (flag==ON) it will try to use the best number of 
   levels but the algorithm is dumb.  The return is number of levels used.
 */
-static int placeq(flag, sys, snglrtys, lhsSize, rhsSize, fieldpts)
-int flag, rhsSize, lhsSize;
-ssystem *sys;
-snglrty *snglrtys;
-fieldpt *fieldpts;
+static int placeq(int flag, ssystem *sys, snglrty *snglrtys, int lhsSize, int rhsSize, fieldpt *fieldpts)
 {
-  int i, j, k, l, side, isexact, multerms(), depth, maxSize;
+  int i, j, k, l, side, isexact, depth, maxSize;
   int xindex, yindex, zindex, limit = multerms(sys->order);
   double length0, length;
-  double minx, maxx, miny, maxy, minz, maxz, tilelength();
+  double minx, maxx, miny, maxy, minz, maxz;
   snglrty *nextq;
   fieldpt *nextf;
   cube *****cubes, *nc;
@@ -522,10 +515,7 @@ cube *nextc;
   Uses the eval vector for the field coeffs at the lowest level.  Also index 
   the lowest level cubes.
 */
-static void indexkid(sys, dad, qindex, pindex, pcindex)
-ssystem *sys;
-cube *dad;
-int *qindex, *pindex, *pcindex;
+static void indexkid(ssystem *sys, cube *dad, int *qindex, int *pindex, int *pcindex)
 {
   int i;
   
@@ -560,9 +550,7 @@ int *qindex, *pindex, *pcindex;
   information is not needed, but in practice building effective 
   preconditioning matrices for desingularized problems depends on it.
   */
-void getPairs(snglist, fptlist)
-snglrty *snglist;
-fieldpt *fptlist;
+void getPairs(snglrty *snglist, fieldpt *fptlist)
 {
   snglrty *nq;
   fieldpt *fp;
@@ -990,8 +978,7 @@ int cntDwnwdChg(cube *cp, int depth)            /* depth: number of lowest level
  * points, and inclusion in the preconditioner.
  * Note, upnumvects and exactUp/exactDown must be set!!!
  */
-static void linkcubes(sys)
-ssystem *sys;
+static void linkcubes(ssystem *sys)
 {
   cube *nc, **plnc, **pdnc, **pmnc, **penc, *****cubes = sys->cubes;
 #if PRECOND != NONE
@@ -1112,8 +1099,7 @@ static void markUp(cube *child, int flag)
  * pass cubes for "child."
  * The interaction list pointer is saved in the interList cube struct field.
  */
-static int getInter(child)
-cube *child;
+static int getInter(cube *child)
 {
   int i, j, vects, usekids, lc, jc, kc, ln, jn, kn;
   int numnbr = (child->parent)->numnbrs; /* number of neighbors */
@@ -1193,8 +1179,7 @@ cube *child;
  * getAllInter generates explicit, true interaction lists for all 
  * non-empty cubes w/lev > 1.
  */
-static void getAllInter(sys)
-ssystem *sys;
+static void getAllInter(ssystem *sys)
 {
   int i, j, k, l, side, depth = sys->depth;
   cube *nc, *****cubes = sys->cubes;

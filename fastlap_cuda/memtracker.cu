@@ -11,7 +11,7 @@ size_t mtcnt;
 void mtinit()
 {
     mtcnt = 0;
-    mtlist = malloc(MAXCNT * sizeof(void *));
+    mtlist = (void **) malloc(MAXCNT * sizeof(void *));
 }
 
 void mtadd(void *ptr)

@@ -50,8 +50,11 @@
 #endif
 
 #include "fastlap.h"
+#include "mulSetup.h"
 #include "mulLocal.h"
 #include "mulMulti.h"
+#include "mulMats.h"
+#include "mulDo.h"
 #include "calcp.h"
 
 #define VERTS 4
@@ -70,26 +73,31 @@
 */
 
 // Function declarations
-void mulMatDirect(ssystem *sys);                            // In mulMats.c
-void mulMatUp(ssystem *sys);                                // In mulMats.c
-void mulMatEval(ssystem *sys);                              // In mulMats.c
-void mulMatDown(ssystem *sys);                              // In mulMats.c
-void mulDirect(ssystem *sys);                               // In mulDo.c
-void mulPrecond(ssystem *sys, int size);                    // In mulDo.c
-void spmulPrecond(ssystem *sys, double *work, int size);    // In mulDo.c
-void mulUp(ssystem *sys);                                   // In mulDo.c
-void mulEval(ssystem *sys);                                 // In mulDo.c
-void mulDown(ssystem *sys);                                 // In mulDo.c
-void setTranslation(ssystem *sys, int val);                 // In mulSetup.c    
+// void mulMatDirect(ssystem *sys);                            // In mulMats.c
+// void mulMatUp(ssystem *sys);                                // In mulMats.c
+// void mulMatEval(ssystem *sys);                              // In mulMats.c
+// void mulMatDown(ssystem *sys);                              // In mulMats.c
+// void mulDirect(ssystem *sys);                               // In mulDo.c
+// void mulPrecond(ssystem *sys, int size);                    // In mulDo.c
+// void spmulPrecond(ssystem *sys, double *work, int size);    // In mulDo.c
+// void mulUp(ssystem *sys);                                   // In mulDo.c
+// void mulEval(ssystem *sys);                                 // In mulDo.c
+// void mulDown(ssystem *sys);                                 // In mulDo.c
+// void setTranslation(ssystem *sys, int val);                 // In mulSetup.c    
 
-int fastlap(plhsSize,prhsSize,pnumSing,px,pshape,pdtype,plhsType,prhsType,plhsIndex,prhsIndex,plhsVect,prhsVect,pxf,pxnrm,pnumLev,pnumMom,pmaxItr,ptol,pjob, pAreas)
-int *plhsSize, *prhsSize, *pnumSing, *pshape, *pdtype, *plhsType, *prhsType, *plhsIndex, *prhsIndex, *pnumLev, *pnumMom, *pmaxItr, *pjob;
-double *px, *plhsVect, *prhsVect, *pxf, *pxnrm, *ptol, *pAreas;
+int fastlap(int *plhsSize, int *prhsSize,
+            int *pnumSing, double *px, int *pshape, int *pdtype,
+            int *plhsType, int *prhsType,
+            int *plhsIndex, int *prhsIndex,
+            double *plhsVect, double *prhsVect,
+            double *pxf, double *pxnrm,
+            int *pnumLev, int *pnumMom, int *pmaxItr,
+            double *ptol, int *pjob, double* pAreas)
 {
     int lhsSize, rhsSize, numSing, numLev, autlev, numMom, maxItr;
-    snglrty *nq, *snglist, *loadSnglrty();
-    fieldpt *nf, *fptlist, *loadFieldpt();
-    ssystem *sys, *mulInit();
+    snglrty *nq, *snglist;
+    fieldpt *nf, *fptlist;
+    ssystem *sys;
     double initalltime, ttlsetup, ttlsolve;
     extern size_t memcount;
     extern double prectime, conjtime, dirtime, multime, uptime, downtime;
@@ -256,7 +264,7 @@ double *px, *plhsVect, *prhsVect, *pxf, *pxnrm, *ptol, *pAreas;
             fprintf(stdout, "           Iterative loop overhead time: %g\n", conjtime);
         
             fprintf(stdout, "   Total memory allocated: %d kilobytes\n", memcount/1000);
-            uallocEfcy(memcount);
+            /* uallocEfcy(memcount); */
             fprintf(stdout, "       Q2M matrix memory allocated: %7.d kilobytes\n",
                 memQ2M/1000);
             memcount = memQ2M;

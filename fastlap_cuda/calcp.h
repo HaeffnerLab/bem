@@ -21,5 +21,8 @@ double calcp(snglrty *sing, double x, double y, double z, int deriv, double *nor
 void dumpnums(int flag, int size);
 void testCalcp(snglrty *pp);
 void restartCalcp(void);
+double tilelength(snglrty *nq);
+double normalize(double vector[3]);
+int If_Equal(double vector1[3], double vector2[3]);
 
 #endif

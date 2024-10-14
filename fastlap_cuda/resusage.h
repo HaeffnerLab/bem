@@ -59,6 +59,7 @@ struct tms timestuff;
 
 /* define macros for time and resident memory usage checks */
 
+static double UNUSED start_time = 0.0;
 static double UNUSED dtime = 0.0;
 static long UNUSED my_stime, my_utime;
 
@@ -105,9 +106,10 @@ dtime /= HZ
 
 #else               /* default - no timers */
 
+#include <time.h>
 #define OTHER           /*  */
-#define starttimer      /*  */
-#define stoptimer       /*  */
+#define starttimer start_time = clock();
+#define stoptimer dtime = ((double)(clock() - start_time)) / CLOCKS_PER_SEC;
 #define DUMPRSS         /*  */
 
 #endif /* NOTOTHER */

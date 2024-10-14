@@ -18,4 +18,6 @@ void setExactDown(ssystem *sys, int numterms);
 int cntDwnwdChg(cube *cp, int depth);
 void setTranslation(ssystem *sys, int val);
 
+ssystem *mulInit(int autom, int depth, int order, snglrty *snglrtys, int lhsSize, int rhsSize, fieldpt *fieldpts);
+
 #endif

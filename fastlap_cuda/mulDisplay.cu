@@ -41,22 +41,19 @@
 #include "mulDisplay.h"
 #include "mulMulti.h"
 
-void disExtrasimpcube(pc)
-cube *pc;
+void disExtrasimpcube(cube *pc)
 {
   printf("cubes[%d][%d][%d][%d]\n", pc->level, pc->j, pc->k, pc->l);
 }
 
-void disExParsimpcube(pc)
-cube *pc;
+void disExParsimpcube(cube *pc)
 {
   cube *pa = pc->parent;
   printf("cubes[%d][%d][%d][%d], ", pc->level, pc->j, pc->k, pc->l);
   printf("parent = cubes[%d][%d][%d][%d]\n", pa->level, pa->j, pa->k, pa->l);
 }
 
-void dissimpcube(pc)
-cube *pc;
+void dissimpcube(cube *pc)
 {
   printf("cube center: x=%g y=%g z=%g\n", pc->x, pc->y, pc->z);
   printf("index=%d level=%d exactUp=%d exactDown=%d numkids=%d\n",
@@ -65,8 +62,7 @@ cube *pc;
      pc->numnbrs, pc->upnumvects, pc->directnumvects, pc->downnumvects);
 }
 
-void discube(pc)
-cube *pc;
+void discube(cube *pc)
 {
 int i;
   printf("cube center: x=%g y=%g z=%g\n", pc->x, pc->y, pc->z);
@@ -92,15 +88,13 @@ int i;
   }
 }
 
-void disupcube(pc)
-cube *pc;
+void disupcube(cube *pc)
 {
 
 
 }
 
-void disdirectcube(pc)
-cube *pc;
+void disdirectcube(cube *pc)
 {
 int i;
   for(i=0; i < pc->directnumvects; i++) {
@@ -110,8 +104,7 @@ int i;
 }
 
 
-void dissys(sys)
-ssystem *sys;
+void dissys(ssystem *sys)
 {
 int i, j, k, l, side;
   printf("side=%d depth=%d order=%d\n",
@@ -124,7 +117,7 @@ int i, j, k, l, side;
       for(k=0; k < side; k++) {
     for(l=0; l < side; l++) {
       fprintf(stdout, "\ncubes[%d][%d][%d][%d]\n", i, j, k, l);
-      dissimpcube(&(sys->cubes[i][j][k][l]));
+      dissimpcube(sys->cubes[i][j][k][l]);
 /*    disdirectcube(&(sys->cubes[i][j][k][l])); */
     }
       }
@@ -148,9 +141,7 @@ int i,j;
 }
 
 
-void disvect(v, size)
-double *v;
-int size;
+void disvect(double *v, int size)
 {
 int i;
   for(i=0; i < size; i++) {
@@ -165,8 +156,7 @@ void dischg(snglrty *pq)
   printf("cond=%d index=%p\n", pq->cond, pq->index);
 }
 
-void disallchg(pq) 
-snglrty *pq;
+void disallchg(snglrty *pq)
 {
 snglrty *nq;
   for(nq = pq; nq != NULL; nq = nq->next) disfchg(pq);
@@ -188,9 +178,7 @@ void disfchg(snglrty *pq)
 /*
 dumpMat dumps a rows x cols matrix of doubles; assumes indices from zero. 
 */
-void dumpMat(mat, rows, cols)
-int rows, cols;
-double **mat;
+void dumpMat(double **mat, int rows, int cols)
 {
   int i, j;
   for(i = 0; i < rows; i++) {
@@ -207,10 +195,7 @@ double **mat;
 dumpChgs dumps the relative coordinates of an array of snglrtys or evaluation 
 points.
 */
-void dumpChgs(sngs, numsngs, x, y, z)
-int numsngs;
-double x, y, z;
-snglrty **sngs;
+void dumpChgs(snglrty **sngs, int numsngs, double x, double y, double z)
 {
   int i;
   double rho, cosA, beta;
@@ -236,10 +221,7 @@ snglrty **sngs;
 /*
   display the matrix built for a given snglrty to multipole transformation
 */
-void dispQ2M(mat, sngs, numsngs, x, y, z, order)
-int numsngs, order;
-double **mat, x, y, z;
-snglrty **sngs;
+void dispQ2M(double **mat, snglrty **sngs, int numsngs, double x, double y, double z, int order)
 {
   fprintf(stdout, "\nQ2M MATRIX: cube at (%.5e %.5e %.5e)\n", x, y, z);
   dumpMat(mat, multerms(order), numsngs);
@@ -251,9 +233,7 @@ snglrty **sngs;
 /*
   display the matrix built for a given multipole to local transformation
 */
-void dispM2L(mat, x, y, z, xp, yp, zp, order)
-int order;
-double **mat, x, y, z, xp, yp, zp;
+void dispM2L(double **mat, double **x, double **y, double **z, double **xp, double **yp, double **zp, int order)
 {
   fprintf(stdout, 
    "\nM2L MATRIX: multi at (%.5e %.5e %.5e) -> local at (%.5e %.5e %.5e)\n",
@@ -264,10 +244,7 @@ double **mat, x, y, z, xp, yp, zp;
 /*
   display the matrix built for a given snglrty to local transformation
 */
-void dispQ2L(mat, sngs, numsngs, x, y, z, order)
-int numsngs, order;
-double **mat, x, y, z;
-snglrty **sngs;
+void dispQ2L(double **mat, snglrty **sngs, int numsngs, double x, double y, double z, int order)
 {
   fprintf(stdout, "\nQ2L MATRIX: cube at (%.5e %.5e %.5e)\n", x, y, z);
   dumpMat(mat, multerms(order), numsngs);
@@ -279,9 +256,7 @@ snglrty **sngs;
 /*
   display the matrix built for a given multipole to multipole transformation
 */
-void dispM2M(mat, x, y, z, xp, yp, zp, order)
-int order;
-double **mat, x, y, z, xp, yp, zp;
+void dispM2M(double **mat, double x, double y, double z, double xp, double yp, double zp, int order)
 {
   fprintf(stdout, 
       "\nM2M MATRIX: cube at (%.5e %.5e %.5e) shifted to (%.5e %.5e %.5e)\n", 
@@ -292,9 +267,7 @@ double **mat, x, y, z, xp, yp, zp;
 /*
   display the matrix built for a given local to local transformation
 */
-void dispL2L(mat, x, y, z, xp, yp, zp, order)
-int order;
-double **mat, x, y, z, xp, yp, zp;
+void dispL2L(double **mat, double x, double y, double z, double xp, double yp, double zp, int order)
 {
   fprintf(stdout, 
       "\nL2L MATRIX: cube at (%.5e %.5e %.5e) shifted to (%.5e %.5e %.5e)\n", 
@@ -305,10 +278,7 @@ double **mat, x, y, z, xp, yp, zp;
 /*
   display the matrix built for a given multipole to potential transformation
 */
-void dispM2P(mat, x, y, z, sngs, numsngs, order)
-int numsngs, order;
-double **mat, x, y, z;
-snglrty **sngs;
+void dispM2P(double **mat, double x, double y, double z, snglrty **sngs, int numsngs, int order)
 {
   fprintf(stdout, "\nM2P MATRIX: cube at (%.5e %.5e %.5e)\n", x, y, z);
   dumpMat(mat, numsngs, multerms(order));
@@ -320,10 +290,7 @@ snglrty **sngs;
 /*
   display the matrix built for a given local to potential transformation
 */
-void dispL2P(mat, x, y, z, sngs, numsngs, order)
-int numsngs, order;
-double **mat, x, y, z;
-snglrty **sngs;
+void dispL2P(double **mat, double x, double y, double z, snglrty **sngs, int numsngs, int order)
 {
   fprintf(stdout, "\nL2P MATRIX: cube at (%.5e %.5e %.5e)\n", x, y, z);
   dumpMat(mat, numsngs, multerms(order));
@@ -335,8 +302,7 @@ snglrty **sngs;
 /*
   displays upward pass and moment vectors associated with a cube - debug only
 */
-void dumpUpVecs(pc)
-cube *pc;
+void dumpUpVecs(cube *pc)
 {
   int i, j;
   fprintf(stdout, 
@@ -362,8 +328,7 @@ cube *pc;
 /*
   displays the upward pass vectors for the eight level 1 cubes - debug only
 */
-void dumpLevOneUpVecs(sys)
-ssystem *sys;
+void dumpLevOneUpVecs(ssystem *sys)
 {
   int i, j, k;
   cube *****cubes = sys->cubes;
@@ -379,9 +344,8 @@ ssystem *sys;
 /*
   checks a cube (direct, eval) list for bad cube structs - debug only
 */
-void chkList(sys, listtype)
-ssystem *sys;
-int listtype;           /* DIRECT or EVAL */
+void chkList(ssystem *sys, int listtype)
+/* listtype DIRECT or EVAL */
 {
   int cnt[BUFSIZ];      /* # of cubes processed by level */
   int depth = sys->depth;
@@ -462,9 +426,7 @@ int listtype;           /* DIRECT or EVAL */
 /*
   dumpList dumps info about the cubes in a list.
 */
-void dumpList(sys, listtype)
-ssystem *sys;
-int listtype;           /* DIRECT, EVAL, MULTIL, or LOCAL */
+void dumpList(ssystem *sys, int listtype)/* listtype: DIRECT, EVAL, MULTIL, or LOCAL */
 {
   int depth;
   int i;
@@ -509,10 +471,7 @@ int listtype;           /* DIRECT, EVAL, MULTIL, or LOCAL */
 /*
   chks a cube for bad cube struct (direct, local or eval) entries - debug only
 */
-void chkCube(sys, nc, listtype)
-ssystem *sys;
-cube *nc;
-int listtype;           /* DIRECT, LOCAL, or EVAL */
+void chkCube(ssystem *sys, cube *nc, int listtype) /* listtype: DIRECT, LOCAL, or EVAL */
 {
   int depth = sys->depth;
   int lev, nn;
@@ -556,9 +515,7 @@ int listtype;           /* DIRECT, LOCAL, or EVAL */
 /*
   checks the lowest level cubes for trouble using chkCube - debug only
 */
-void chkLowLev(sys, listtype)
-ssystem *sys;
-int listtype;           /* DIRECT, LOCAL or EVAL */
+void chkLowLev(ssystem *sys, int listtype) /* listtype: DIRECT, LOCAL or EVAL */
 {
   int i, j, k, l, side, depth = sys->depth, cnt = 0;
   cube *nc, *****cubes = sys->cubes;
@@ -582,9 +539,7 @@ int listtype;           /* DIRECT, LOCAL or EVAL */
 /*
   core display routine used below
 */
-void dumpSynCore1(str, depth, fcnt, exupcnt, exdowncnt, emcnt, tcnt)
-int depth, *fcnt, *exupcnt, *exdowncnt, *emcnt, *tcnt;
-char *str;
+void dumpSynCore1(char *str, int depth, int *fcnt, int *exupcnt, int *exdowncnt, int *emcnt, int *tcnt)
 {
   int i;
   fprintf(stdout, "%-13s", str);
@@ -602,9 +557,7 @@ char *str;
 /*
   core display rtn used below
 */
-void dumpSynCore2(str, depth, cnt)
-int depth, *cnt;
-char *str;
+void dumpSynCore2(char *str, int depth, int *cnt)
 {
   int i;
 
@@ -625,8 +578,7 @@ char *str;
   displays number of exactUp, exactDown, full, empty and total cubes per 
   level in all cubes, and eval, direct, multi and local lists
 */
-void dumpSynop(sys)
-ssystem *sys;
+void dumpSynop(ssystem *sys)
 {
   int i, j, k, l, side, depth = sys->depth, lev;
   int exupcnt[BUFSIZ], exdowncnt[BUFSIZ], fcnt[BUFSIZ], emcnt[BUFSIZ], tcnt[BUFSIZ];
@@ -668,7 +620,6 @@ ssystem *sys;
     }
   }
   sprintf(str, "All cubes");
-  dumpSynCore1(str, depth, fcnt, exupcnt, exdowncnt, emcnt, tcnt);
   
   for(i = 0; i <= depth; i++) exupcnt[i] = exdowncnt[i] = fcnt[i] = emcnt[i] = tcnt[i] = 0;
   /* dump cube direct list by level */
@@ -725,9 +676,7 @@ ssystem *sys;
 /*
   like dumpMat but different formating and row labels (for dumpMatBldCnts)
 */
-void dumpMatCnts(mat, depth, type)
-int **mat, depth;
-char *type;
+void dumpMatCnts(int **mat, int depth, char *type)
 {
   int i, j;
   char str[BUFSIZ];
@@ -760,8 +709,7 @@ char *type;
 /*
   display matrix build count totals
 */
-void dumpMatBldCnts(sys)
-ssystem *sys;
+void dumpMatBldCnts(ssystem *sys)
 {
   char type[BUFSIZ];
   extern int **Q2Mcnt, **Q2Lcnt, **Q2Pcnt, **L2Lcnt;
@@ -796,8 +744,7 @@ ssystem *sys;
 /* 
   dumps state of important compile flags and arg list parameters
 */
-void dumpConfig(fp)
-FILE *fp;
+void dumpConfig(FILE *fp)
 {
 
   fprintf(fp, "\n\nFastLap CONFIGURATION FLAGS:\n");
@@ -866,9 +813,7 @@ FILE *fp;
 /*
   pads a string on the right up to a given length, truncates if too long
 */
-char *padName(tostr, frstr, len)
-char *tostr, *frstr;
-int len;
+char *padName(char *tostr, char *frstr, int len)
 {
   int i;
 
@@ -884,9 +829,7 @@ int len;
 /*
   returns a string of spaces (doesn't stdio have this somewhere?)
 */
-char *spaces(str, num)
-char *str;
-int num;
+char *spaces(char *str, int num)
 {
   int i;
 
@@ -898,11 +841,9 @@ int num;
 /*
   dumps brief information about multipole set up
 */
-void dumpMulSet(sy, size, numLev, order)
-ssystem *sy;
-int size, numLev, order;
+void dumpMulSet(ssystem *sy, int size, int numLev, int order)
 {
-  int numcubes, numsides, i, multerms();
+  int numcubes, numsides, i;
 
   for(numcubes = 1, i = 0; i < numLev; numcubes *= 8, i++);
   for(numsides = 1, i = 0; i < numLev; numsides *= 2, i++);

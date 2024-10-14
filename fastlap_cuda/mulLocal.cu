@@ -159,7 +159,6 @@ double **mulMulti2Local(double x, double y, double z,
   double rhoJ, rhoN;                /* rho^j and (-1)^n*rho^(n+1) in main loop */
   double rhoFac;                    /* = rhoJ*rhoN intermediate storage */
   double temp1, temp2, temp3;
-  double iPwr(), sinB(), cosB();
   extern double *tleg; /* external temporary storage */
 
   /* allocate a zeroed multi to local transformation matrix */
@@ -254,7 +253,6 @@ double **mulLocal2Local(double x, double y, double z,
   double rhoJ, rhoN;            /* rho^j and (-1)^n*rho^(n+1) in main loop */
   double rhoFac;                /* = rhoJ*rhoN intermediate storage */
   double temp1=0., temp2=0., temp3=0.;
-  double iPwr(), sinB(), cosB();
   extern double *tleg; /* external temporary storage */
 
   /* allocate the local to local transformation matrix */
@@ -412,7 +410,6 @@ double **mulLocal2P(double x, double y, double z, fieldpt **fpts, int numfpts, i
 {
   double **mat;
   double cosTh;         /* cosine of elevation coordinate */
-  double fact();
   extern double *Irn, *Mphi, *phi, *Ir;
   int i, j, k, m, n, kold;
   int cterms = costerms(order), terms = multerms(order);

@@ -355,7 +355,6 @@ void restartMulti(void)
 double **mulQ2Multi(snglrty **sngs, int numsngs, double x, double y, double z,
                     int didthis, int order, double **mat)
 {
-  double **mulMulti2Multi();
   int i, j, k, terms = multerms(order);
   snglrty *pq;
 
@@ -397,13 +396,10 @@ double **mulQ2Multi(snglrty **sngs, int numsngs, double x, double y, double z,
 }
   
 
-double **mulMulti2Multi(x, y, z, xp, yp, zp, order, mat)
-double x, y, z, xp, yp, zp; /* cube center, parent cube center */
-int order;
-double **mat;
+double **mulMulti2Multi(double x, double y, double z, double xp, double yp, double zp, int order, double **mat)
+/* x, y, z; xp, yp, zp: cube center, parent cube center */
 {
   double rho, rhoPwr, cosA, beta, mBeta, temp1, temp2; 
-  double iPwr(), fact();
   int r, j, k, m, n, c;
   int cterms = costerms(order), sterms = sinterms(order);
   int terms = cterms + sterms;
@@ -506,10 +502,8 @@ double **mat;
   builds multipole evaluation matrix; used only for fake downward pass
   x,y,z is the multipole coord, fpts[]->x,y,z are the evaluation points.
 */
-double **mulMulti2P(x, y, z, fpts, numfpts, order)
-double x, y, z;         /* multipole expansion origin */
-fieldpt **fpts;
-int numfpts, order;
+double **mulMulti2P(double x, double y, double z, fieldpt **fpts, int numfpts, int order)
+/* multipole expansion origin */
 {
   double **mat;
   double cosTh;         /* cosine of elevation coordinate */

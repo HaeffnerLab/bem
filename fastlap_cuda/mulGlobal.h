@@ -307,8 +307,8 @@ misc. global macros
 #define NOABRT OFF              /* ON=> suppress some fatal error traps */
 #define CMDDAT OFF              /* ON=> dump command line info to output */
 #define ITRDAT OFF              /* ON=> dump residuals for every iteration */
-#define TIMDAT OFF              /* ON=> dump time and memory usage numbers */
-#define TIMDATFIELD OFF         /* ON=> dump time and memory usage numbers */
+#define TIMDAT ON              /* ON=> dump time and memory usage numbers */
+#define TIMDATFIELD ON         /* ON=> dump time and memory usage numbers */
 #define CFGDAT OFF              /* ON=> dump configuration to output */
 #define MULDAT OFF              /* ON=> dump brief multipole setup info */
 
