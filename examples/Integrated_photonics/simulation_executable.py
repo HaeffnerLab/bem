@@ -57,7 +57,7 @@ def apply_dc_remap(name_to_array: dict, flip_sign: bool = False, invert_flag: bo
             out[key] = -arr if flip_sign else arr
     return out
 def find_voltages(zl, flip_sign=False):
-    yl = 75*1e-3 #75 mm? probably due to scaling of the trap
+    yl = 77*1e-3 #75 mm? probably due to scaling of the trap
     xl = 3.75*1e-3
     # meshing
     mesh_unit = 1e-3    
@@ -230,7 +230,7 @@ def find_voltages(zl, flip_sign=False):
     #############################################################
     strs = list(trap['electrodes'].keys())
     xl = 3.75*1e-3
-    yl = 75*1e-3
+    yl = 77*1e-3
 
     position = [xl, yl, zl]
 
@@ -483,16 +483,22 @@ def find_voltages(zl, flip_sign=False):
     # fig.tight_layout(pad=1)
     # for 400 um solution
     #save_muls(s,xl,zl,roi,height= yl*1e3, ez=0.5, ex=-0.75, ey=-0.9,u2=6.0, u5=29.0, u1=-0.0, u3=-11.0,u4=0.0)
-    save_muls(s,xl,zl,roi,height= yl*1e3, ez=0.0, ex=0.0, ey=1.0,u2=6.0, u5=0.0, u1=0.0, u3=2.0,u4=0.0)
+    save_muls(s,xl,zl,roi,height= yl*1e3, ez=0.0, ex=0.0, ey=0.0,u2=6.0, u5=0.0, u1=0.0, u3=2.0,u4=0.0)
     
+# DC_MAP = {
+#     1: 21,  2: 20,  3: 19,  4: 18,  5: 17,
+#     6: 16,  7: 15,  8: 14,  9: 13, 10: 12,
+#    11: 10, 12:  9, 13:  8, 14:  7, 15:  6,
+#    16:  5, 17:  4, 18:  3, 19:  2, 20:  1,
+#    21: 11,
+# }
 DC_MAP = {
-    1: 21,  2: 20,  3: 19,  4: 18,  5: 17,
-    6: 16,  7: 15,  8: 14,  9: 13, 10: 12,
-   11: 10, 12:  9, 13:  8, 14:  7, 15:  6,
-   16:  5, 17:  4, 18:  3, 19:  2, 20:  1,
-   21: 11,
+    1: 1,  2: 2,  3: 3,  4: 4,  5: 5,
+    6: 6,  7: 7,  8:8,  9: 9, 10: 10,
+   11: 11, 12:  12, 13:  13, 14:  14, 15:  15,
+   16:  16, 17:  17, 18:  18, 19:  19, 20:  20,
+   21: 21,
 }
-
 DC_MAP_INVERT = {
    21:  1, 20:  2, 19:  3, 18:  4, 17:  5,
    16:  6, 15:  7, 14:  8, 13:  9, 12: 10,
