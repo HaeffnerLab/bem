@@ -157,14 +157,16 @@ def find_voltages(zl, flip_sign=False):
 
     jobs = list(Configuration.select(mesh,'DC.*','RF'))    # select() picks one electrode each time.
     # run the different electrodes on the parallel pool
-    pool = multiprocessing.Pool(8)
+    pool = multiprocessing.Pool(3)
     pmap = pool.map # parallel map
     #pmap = map # serial map
-    t0 = time()
+    # print("before time")
+    # t0 = time()
+    # print("after time")
     # range(len(jobs))
     def run_map():
         out = pmap(run_job_bypassvtk, ((jobs[i], grid, vtk_out,i,len(jobs)) for i in np.arange(len(jobs))))
-        print( "Computing time: %f s"%(time()-t0))
+        # print( "Computing time: %f s"%(time()-t0))
         return out
         # run_job casts a word after finishing ea"ch electrode.
 
@@ -303,13 +305,13 @@ def find_voltages(zl, flip_sign=False):
             "DC21":-0.4} 
 
     # ---- load pkl ----
-    pkl_path = "C:/Users/Ba133_IP/Code/startup/dac_load_settings.pkl"
+    # pkl_path = "C:/Users/Ba133_IP/Code/startup/dac_load_settings.pkl"
 
-    with open(pkl_path, "rb") as f:
-        raw = pickle.load(f)   # e.g. {0: v0, 1: v1, ..., 20: v20}
-    # ---- apply remap ----
-    mult_voltages_remapped = apply_dc_remap({f"DC{i}": float(raw.get(i, 0.0)) for i in range(21)}, flip_sign=False, invert_flag = True)
-    print(s.setVoltages(mult_voltages_remapped))
+    # with open(pkl_path, "rb") as f:
+    #     raw = pickle.load(f)   # e.g. {0: v0, 1: v1, ..., 20: v20}
+    # # ---- apply remap ----
+    # mult_voltages_remapped = apply_dc_remap({f"DC{i}": float(raw.get(i, 0.0)) for i in range(21)}, flip_sign=False, invert_flag = True)
+    # print(s.setVoltages(mult_voltages_remapped))
     # Generating pseudopotential
     ##############################################################################################################################
     #q = ion charge
