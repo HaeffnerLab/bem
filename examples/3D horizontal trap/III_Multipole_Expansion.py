@@ -68,8 +68,8 @@ strs = list(trap['electrodes'].keys())
 # yl = 72.65*1e-3
 
 xl = 0
-yl = 0
-zl = 20e-3
+yl = 192.0e-3
+zl = 0
 
 
 position = [xl, yl, zl]

@@ -77,7 +77,7 @@ from bem.formats import stl
 
 radius= 1000e-3
 area = 1e-4
-#file = 'elevator-single-trap'
+
 file = 'horizontal_trap'
 stl_path = 'trap_models/'+file+'.stl'
 fout_name = 'trap_output_files/mesh files/'+file+'_'+str(radius)+'_'+str(area)+'.pkl'
@@ -166,21 +166,22 @@ mesh = Mesh.from_mesh(stl.stl_to_mesh(*s_nta, scale=1,
 #usually, this is the ion's location, specified in appropriate units (usually millimeters)
 # zl = 240*1e-3
 zl=0
-yl = 50.0*1e-3
+yl = 192.0*1e-3
 xl = 0.0*1e-3
 
 
 
 
-mesh.triangulate(opts="a1Q",new = False)
+# mesh.triangulate(opts="a1Q",new = False)
 
 
-rad = 1000*1e-3
-inside=5e-3
-outside=1e4
-print('first triangulation:')
-mesh.areas_from_constraints(Sphere(center=np.array([xl,yl,zl]),radius=rad, inside=inside, outside=outside))
-mesh.triangulate(opts="q20Q",new = False)
+# rad = 200*1e-3
+# rad=radius
+# inside=5e-3
+# outside=1e4
+# print('first triangulation:')
+# mesh.areas_from_constraints(Sphere(center=np.array([xl,yl,zl]),radius=rad, inside=inside, outside=outside))
+# mesh.triangulate(opts="q20Q",new = False)
 
 # what happened to this feature (Box)? is this on bem savio?
 # mesh.areas_from_constraints(Box(start=-0.5, end= 0.5,inside=inside, outside=outside))
@@ -190,9 +191,10 @@ mesh.triangulate(opts="q20Q",new = False)
 # areas_from_constraints specifies sphere with finer mesh inside it.
 #  "inside", "outside" set different mesh densities. 
 print('second triangulation:')
-rad =500e-3
+# rad =500e-3
+rad=radius
 inside=area
-outside=1e4
+outside=5e-2
 mesh.areas_from_constraints(Sphere(center=np.array([xl,yl,zl]),radius=rad, inside=inside, outside=outside))
 mesh.triangulate(opts="q20Q",new = False)
 
@@ -223,10 +225,5 @@ mesh.plot()
 
 
 print(len(mesh.points))
-
-
-# In[ ]:
-
-
 
 

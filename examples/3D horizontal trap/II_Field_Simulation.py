@@ -74,11 +74,11 @@ with open(file_in_name,'rb') as f:
 
 
 with open(file_in_name,'rb') as f:
-    mesh_unit,xl,yl,zl,mesh,electrode_names= pickle.load(f) # import results from mesh processing
+    mesh_unit,xl,yl,zl,mesh,electrode_names = pickle.load(f) # import results from mesh processing
 # grid to evalute potential and fields atCreate a grid in unit of scaled length mesh_unit. Only choose the interested region (trap center) to save time.
-Lx, Ly, Lz = 20*1e-3, 50*1e-3, 20*1e-3 # in the unit of scaled length mesh_unit. this is the simulation volume
+Lx, Ly, Lz = 5*1e-3, 5*1e-3, 5*1e-3 # in the unit of scaled length mesh_unit. this is the simulation volume
 # xl,yl,zl = -3.75*1e-3,72*1e-3,270*1.0e-3
-xl,yl,zl = 0.0e-3, 50.0e-3, 60.0e-3 # this is the coordinates of the center of the volume
+xl,yl,zl = 0.0e-3, 192.0e-3, 0.0e-3 # this is the coordinates of the center of the volume
 s = 2e-3
 sx,sy,sz = s,s,s
 print("done")
@@ -160,7 +160,7 @@ Result.view(vtk_out, ele) # add electrode name between '' for result view
 # In[6]:
 
 
-# for x in np.arange(0,4):
+# for x in np.arange(0,4): 
 data_name = "%s_%s.vtk" % (vtk_out, 'RF')
 import pyvista as pv 
 data = pv.ImageData(data_name)
