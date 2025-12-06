@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=bem_simulation_3D_horizontal
-#SBATCH --account=ozgursahin    # e.g. ac_abc123
+#SBATCH --account=ozgursahin
 #SBATCH --partition=standard
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -18,7 +18,7 @@ module load anaconda3
 eval "$(conda shell.bash hook)"
 
 # Activate your environment (replace with yours)
-conda activate my_env
+conda activate bem39
 
 # Run your python script (replace with yours)
-python my_script.py
+python II_Field_Simulation.py
