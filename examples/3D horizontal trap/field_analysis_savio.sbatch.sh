@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --job-name=bem_simulation_3D_horizontal
-#SBATCH --account=ozgursahin
-#SBATCH --partition=standard
+#SBATCH --account=fc_haeffnerbem
+#SBATCH --partition=savio3_bigmem
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=128G
+#SBATCH --mem=512G
 #SBATCH --time=24:00:00
 #SBATCH --output=slurm_%j.out
 #SBATCH --error=slurm_%j.err
