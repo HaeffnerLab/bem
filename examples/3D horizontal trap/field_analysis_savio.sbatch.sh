@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=128G
-#SBATCH --time=03:00:00
+#SBATCH --time=24:00:00
 #SBATCH --output=slurm_%j.out
 #SBATCH --error=slurm_%j.err
 
@@ -21,4 +21,4 @@ eval "$(conda shell.bash hook)"
 conda activate bem39
 
 # Run your python script (replace with yours)
-python II_Field_Simulation.py
+python -u II_Field_Simulation.py

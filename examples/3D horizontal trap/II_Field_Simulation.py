@@ -46,6 +46,8 @@ from utils.helper_functions import run_job, write_pickle
 
 # In[2]:
 
+print("PYTHON STARTED", flush=True)
+
 
 radius= 1000e-3
 area = 1e-4
@@ -76,7 +78,7 @@ with open(file_in_name,'rb') as f:
 with open(file_in_name,'rb') as f:
     mesh_unit,xl,yl,zl,mesh,electrode_names = pickle.load(f) # import results from mesh processing
 # grid to evalute potential and fields atCreate a grid in unit of scaled length mesh_unit. Only choose the interested region (trap center) to save time.
-Lx, Ly, Lz = 5*1e-3, 5*1e-3, 5*1e-3 # in the unit of scaled length mesh_unit. this is the simulation volume
+Lx, Ly, Lz = 20*1e-3, 20*1e-3, 20*1e-3 # in the unit of scaled length mesh_unit. this is the simulation volume
 # xl,yl,zl = -3.75*1e-3,72*1e-3,270*1.0e-3
 xl,yl,zl = 0.0e-3, 192.0e-3, 0.0e-3 # this is the coordinates of the center of the volume
 s = 2e-3
@@ -116,7 +118,7 @@ shape = (nx,ny,nz)
 # In[4]:
 
 multithread = True
-if sys.platform == 'darwin':
+if sys.platform == 'darwin' or 'win32':
     multithread = False
 
 jobs = list(Configuration.select(mesh,'DC.*','RF', 'RF2'))    # select() picks one electrode each time.
@@ -134,51 +136,56 @@ def run_map():
     else:
         for i in np.arange(len(jobs)):
             run_job((jobs[i], grid, vtk_out,i,len(jobs)))
-            print(f'Job {i} time elapsed: {time()-t0} s')
-    print("Computing time: %f s"%(time()-t0))
+            print(f'Job {i} time elapsed: {time()-t0} s', flush=True)
+    print("Computing time: %f s"%(time()-t0), flush=True)
     # run_job casts a word after finishing ea"ch electrode.
 
 run_map()
 
 
+
+
+# In[5]:
+    
 # ## (3) view simulation results
 # The results can be viewed in an interactive 3-d plot using the package pyvista
 
-# In[5]:
-
-ele = 'DC8'
-data_name = "%s_%s.vtk" % (vtk_out, ele)
-# data = pv.UniformGrid(data_name) #deprecated syntax
-data = pv.ImageData(data_name)
-scalar_name = 'potential'
-avals = data[scalar_name]
-range = avals.max()-avals.min()
-input_range = [avals.min(),avals.min()+range]
-Result.view(vtk_out, ele) # add electrode name between '' for result view
+# ele = 'DC8'
+# data_name = "%s_%s.vtk" % (vtk_out, ele)
+# # data = pv.UniformGrid(data_name) #deprecated syntax
+# data = pv.ImageData(data_name)
+# scalar_name = 'potential'
+# avals = data[scalar_name]
+# range = avals.max()-avals.min()
+# input_range = [avals.min(),avals.min()+range]
+# Result.view(vtk_out, ele) # add electrode name between '' for result view
 
 
-# In[6]:
+# # In[6]:
 
 
-# for x in np.arange(0,4): 
-data_name = "%s_%s.vtk" % (vtk_out, 'RF')
-import pyvista as pv 
-data = pv.ImageData(data_name)
-scalar_name = 'potential'
+# # for x in np.arange(0,4): 
+# data_name = "%s_%s.vtk" % (vtk_out, 'RF')
+# import pyvista as pv 
+# data = pv.ImageData(data_name)
+# scalar_name = 'potential'
 
-avals = data[scalar_name]
-input_range = [-0.2,5.0]
-Result.view(vtk_out, 'RF') # add electrode name between '' for result view
+# avals = data[scalar_name]
+# input_range = [-0.2,5.0]
+# Result.view(vtk_out, 'RF') # add electrode name between '' for result view
 
 
-# ## (4) save simulation results
+
 
 # In[7]:
 
+# ## (4) save simulation results
 
-electrode_names = ['DC1','DC2','DC3','DC4','DC5','DC6','DC7','DC8','DC9','DC10','DC11',
-                   'DC12','DC13','DC14','DC15','DC16','DC17',
-                   'RF', 'RF2']
+electrode_names = ['DC1','DC2',
+                   #'DC3','DC4','DC5','DC6','DC7','DC8','DC9','DC10','DC11',
+                   #'DC12','DC13','DC14','DC15','DC16','DC17',
+                   #'RF', 'RF2'
+                   ]
 write_pickle(vtk_out,file_out_name,grid,electrode_names)
 
 
