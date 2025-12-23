@@ -1,2 +1,0 @@
-corrupted size vs. prev_size
-/var/spool/slurmd/job30478612/slurm_script: line 24: 3387635 Aborted                 (core dumped) python -u II_Field_Simulation.py

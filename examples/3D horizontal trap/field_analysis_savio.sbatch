@@ -18,7 +18,15 @@ module load anaconda3
 eval "$(conda shell.bash hook)"
 
 # Activate your environment (replace with yours)
+
 conda activate bem39
 
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export VECLIB_MAXIMUM_THREADS=1
+
+
 # Run your python script (replace with yours)
-python -u II_Field_Simulation.py
+srun python -u II_Field_Simulation.py
