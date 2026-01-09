@@ -5,9 +5,7 @@ import matplotlib.pyplot as plt
 # from mpl_toolkits.axes_grid.inset_locator import inset_axes, InsetPosition, mark_inset, zoomed_inset_axes
 from ipywidgets import interactive, interact
 import ipywidgets as widgets
-import os
 from matplotlib import cm
-from datetime import datetime
 
 
 colormap = cm.get_cmap('tab20')
@@ -86,53 +84,7 @@ def plot_multipole_vs_expansion_height(height,position,roi):
     plt.xticks(range(Nmulti), s.multipole_print_names, rotation=-90)
     fig.tight_layout(pad=1)
     plt.show()
-#----------------------------------------------------------------------------------------------------------
-def save_voltages_csv(path, elecs, voltages, label=None):
-    """
-    Append voltages as a new column to a CSV whose first column is 'electrode'
-    and contains DC1..DC21 (one per row). Creates the file if it doesn't exist.
 
-    Parameters
-    ----------
-    path : str
-        CSV file path.
-    elecs : Sequence[str]
-        Electrode names, e.g. ['DC1', ..., 'DC21'].
-    voltages : Sequence[float]
-        Voltages aligned with `elecs`.
-    label : str or None
-        Column name for this run. If None, uses a timestamp.
-    """
-    if label is None:
-        label = datetime.now().strftime("run_%Y%m%d_%H%M%S")
-
-    # Build a tidy Series indexed by electrode for easy alignment
-    s = pd.Series(voltages, index=pd.Index(elecs, name="electrode"), name=label)
-    print(label)
-    if not os.path.exists(path):
-        # Create new file: first column 'electrode', then one column of voltages
-        df = s.reset_index()
-        df.to_csv(path, index=False)
-        return
-
-    # Append as a new column, aligning by electrode name
-    existing = pd.read_csv(path)
-
-    # Ensure the first column is named 'electrode'
-    if existing.columns[0].lower() != "electrode":
-        raise ValueError(f"Expected first column to be 'electrode', got {existing.columns[0]!r}")
-
-    existing = existing.set_index("electrode")
-
-    # Add/overwrite column for this label, automatically aligning rows by name
-    existing[label] = s
-
-    # (optional) ensure the canonical order DC1..DC21 if you have it
-    # canonical = [f"DC{i}" for i in range(1, 22)]
-    # existing = existing.reindex(canonical)
-
-    # Write back
-    existing.reset_index().to_csv(path, index=False)
 # %% md
 # plot voltage solution of a group of multipole coefficients
 # %%
@@ -140,15 +92,9 @@ def plot_muls(s,xl,zl,roi,height, **multipoles): # ey, ez, ex, u3, u2, u5, u1, u
     position1 = [xl, height * 1e-3, zl]
     s.update_origin_roi(position1, roi)
     multipole_coeffs = {key:multipoles[key.lower()] for key in s.used_multipoles}
+        
+    #multipole_coeffs = {'Ey': ey, 'Ez': ez, 'Ex': ex, 'U3': u3, 'U2': u2, 'U5': u5, 'U1': u1,'U4':u4}
     voltages = s.setMultipoles(multipole_coeffs)
-    elecs = getattr(s, "controlled_elecs", getattr(s, "controlled_electrodes", s.electrode_names))
-
-    # Optional: use height in the column label so you can tell runs apart
-    label = f"zl_{zl*1e3}um"
-
-    save_voltages_csv("shuttle.csv", elecs, voltages, label=label)
-    # #multipole_coeffs = {'Ey': ey, 'Ez': ez, 'Ex': ex, 'U3': u3, 'U2': u2, 'U5': u5, 'U1': u1,'U4':u4}
-    # voltages = s.setMultipoles(multipole_coeffs)
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(30, 12))
     fig.suptitle(f'Trap Height: {height:0.0f} $\mu$m')
     ax1.bar(s.controlled_elecs, voltages)
@@ -165,21 +111,8 @@ def plot_muls(s,xl,zl,roi,height, **multipoles): # ey, ez, ex, u3, u2, u5, u1, u
     ax2.set_xlim(min(xpos) - 1, max(xpos) + 1)
     ax2.set_ylim(min(ypos) - 1, max(ypos) + 1)
     plt.subplots_adjust(bottom=0.25)
-    print(voltages)
     plt.show()
     
-def save_muls(s, xl, zl, roi, height, **multipoles):
-    position1 = [xl, height * 1e-3, zl]
-    s.update_origin_roi(position1, roi)
-    multipole_coeffs = {key:multipoles[key.lower()] for key in s.used_multipoles}
-    voltages = s.setMultipoles(multipole_coeffs)
-    elecs = getattr(s, "controlled_elecs", getattr(s, "controlled_electrodes", s.electrode_names))
-
-    # Optional: use height in the column label so you can tell runs apart
-    label = f"zl_{zl*1e3}um"
-
-    save_voltages_csv("shuttle.csv", elecs, voltages, label=label)
-    print(voltages)
     
 def U2_to_mhz(u2):
     m = 40.078 * 1.66e-27

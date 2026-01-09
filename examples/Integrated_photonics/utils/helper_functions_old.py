@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from bem.formats import stl
 import os
-import time
 from scipy.signal import argrelextrema
 from bem import Result
 import pickle
@@ -46,12 +45,7 @@ def plot_mesh(xl,yl,mesh,mesh_unit,name):
     mesh.plot(ax)
     #plt.savefig(name, bbox_inches='tight')
     plt.show()
-# Edit for debugging 09/23 Elijah
-def run_job_timed(args):
-    t0 = time.process_time()
-    res = run_job(args)
-    cpu = time.process_time() - t0
-    return res,cpu
+
 # Trap simulations.
 def run_job(args):
     # job is Configuration instance.
@@ -61,8 +55,8 @@ def run_job(args):
     # refine twice adaptively with increasing number of triangles, min angle 25 deg.
     # job.adapt_mesh(triangles=4e2, opts="q25Q")
     # job.adapt_mesh(triangles=2e3, opts="q25Q")
-    # solve for surface charges. Solve_singularities in electrostatics.py
-    job.solve_singularities(num_mom=4, num_lev=3, max_iter=2000)
+    # solve for surface charges
+    job.solve_singularities(num_mom=4, num_lev=3)
 #     print("done")
     # get potentials and fields
     # For "RF", field=True computes the field.
@@ -71,23 +65,6 @@ def run_job(args):
     result.save(prefix,'vtk')
     # print("finished job %s" % job.name)
     return job
-
-
-def run_job_bypassvtk(args):
-    # job is Configuration instance.
-    job, grid, prefix,i,tot = args
-    # print('Running job '+job.name)
-    print(f"starting job {i+1} out of {tot}")
-    job.solve_singularities(num_mom=4, num_lev=3, max_iter=2000)
-    result = job.simulate(grid, field=job.name=="RF", num_lev=2)
-    print("finished job %s" % job.name)
-    if job.name == "RF":
-        arr = result.field_square
-    else:
-        arr = result.potential
-
-    print(f"finished job {job.name}")
-    return (job.name, arr)
 
 
 
@@ -381,7 +358,6 @@ def write_pickle(fin,fout,grid,strs):
     result0 = Result.load(fin, strs[0], trans_file)
     p0 = result0.potential
     for ele in strs:
-        print(ele)
         result = Result.load(fin, ele,trans_file)
         if ele=='RF':
             p = result.field_square

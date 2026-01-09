@@ -170,6 +170,6 @@ cython_debug/
 *.pyc
 bem/__pycache__/triangulation.cpython-39.pyc
 bem/__pycache__/__init__.cpython-39.pyc
-*.vtk
+# *.vtk
 *.icloud
 *.pyc
