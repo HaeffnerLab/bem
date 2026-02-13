@@ -1,0 +1,17 @@
+Bem Simulation Parameters
+1.	Grid Density: S = 0.005
+	Grid Shape(x, y, z): (0.6, 0.3, 0.2)
+	Grid Count(x, y, z): (121, 61, 41)
+	Mesh Density: (inside = 0.001, radius = 5)
+	Mesh Points: 57396
+	y-offset: Unable to run, blue screen x 1, dead x 2
+
+2.	Grid Density: S = 0.01
+	Grid Shape(x, y, z): (0.6, 0.3, 0.2)
+	Grid Count(x, y, z): (61, 31, 21)
+	Mesh Density: (inside = 0.001, radius = 5)
+	Mesh Points: 57396
+	
+	RF VTK Runtime： ～7 hrs
+	DC VTK Runtime：
+	y-offset: 

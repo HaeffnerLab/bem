@@ -1,0 +1,23 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# BEM Simulation Workflow
+
+## Workflow Steps
+1. **Model Creation**: Create a 3D model in STL format with properly colored electrodes
+2. **Mesh Processing**: Import and process the STL file, rename electrodes, refine the mesh
+3. **Job Configuration**: Set up simulation parameters, define the grid for data extraction
+4. **Simulation**: Run the BEM electrostatics simulation (locally or on HPC)
+5. **Result Analysis**: Visualize and analyze the simulation results
+
+## Key Files
+- [setup.py](mdc:setup.py): Package setup and installation
+- [bem/pipeline.py](mdc:bem/pipeline.py): Simulation pipeline
+- [bem/electrostatics.py](mdc:bem/electrostatics.py): Core electrostatics solver
+
+## Output Files
+Simulations produce VTK files with the following naming conventions:
+- `<prefix>_<electrode_name>.vtk`: Contains potential, field, and field square data
+- `<prefix>_<electrode_name>_mesh.vtk`: Contains charge distribution and final mesh

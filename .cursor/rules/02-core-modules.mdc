@@ -1,0 +1,19 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Core BEM Modules
+
+## Main Modules
+- [bem/__init__.py](mdc:bem/__init__.py): Package initialization and exports
+- [bem/electrostatics.py](mdc:bem/electrostatics.py): Core electrostatics simulation functionality
+- [bem/fastlap_wrapper.py](mdc:bem/fastlap_wrapper.py): Interface to the FastLap BEM implementation
+- [bem/grid.py](mdc:bem/grid.py): Grid generation for simulation domains
+- [bem/pipeline.py](mdc:bem/pipeline.py): BEM simulation pipeline
+- [bem/triangulation.py](mdc:bem/triangulation.py): Mesh triangulation utilities
+- [bem/show_result.py](mdc:bem/show_result.py): Result visualization tools
+- [bem/spherical_harmonics.py](mdc:bem/spherical_harmonics.py): Spherical harmonics calculations
+
+## Mesh Handling
+The package uses triangular meshes to represent surfaces, with various utilities for mesh creation, manipulation, and refinement.

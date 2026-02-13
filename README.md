@@ -19,6 +19,11 @@ in /doc/fastlap_fl-2.0-22oct96 for reference.
 - [Savio Basics](#id-8)
 
 ## Installation <div id='id-1'/>
+
+Your bem.fastlap and bem.pytriangle C/Cython extensions must be compiled. On Windows that means you need MSVC + SDK (and better not run this inside MSYS2).
+
+Install Build Tools for Visual Studio 2022 → select the “Desktop development with C++” workload. Make sure the MSVC v143, Windows 10/11 SDK, and CMake components are checked.
+
 To install BEM on your computer, clone the [bem](https://github.com/HaeffnerLab/bem) directory and create a new conda environment. 
 
 ```

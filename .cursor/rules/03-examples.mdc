@@ -1,0 +1,23 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Examples and Simulations
+
+The `examples/` directory contains various simulation examples demonstrating the use of the BEM package.
+
+## Key Examples
+- [examples/SimpleTrap/SimpleTrap.ipynb](mdc:examples/SimpleTrap/SimpleTrap.ipynb): Basic example showing the complete workflow for a simple ion trap
+- [examples/Integrated_photonics/](mdc:examples/Integrated_photonics/): Simulations for integrated photonics devices
+
+## Example Structure
+Each example typically includes:
+1. A Jupyter notebook (.ipynb) with the complete workflow
+2. STL files for the device geometry
+3. Python scripts for running simulations
+4. VTK files for visualization of results
+5. Batch job scripts for running on HPC (e.g., saviojob.sh)
+
+## Running Examples
+Examples can be run locally or on a high-performance computing cluster like Berkeley's Savio.

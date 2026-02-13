@@ -1,0 +1,23 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Utilities and Helper Functions
+
+## Core Utilities
+- [bem/area_constraints.py](mdc:bem/area_constraints.py): Functions for mesh area constraints
+- [bem/evaluate.py](mdc:bem/evaluate.py): Evaluation utilities for simulation results
+- [utils/](mdc:utils/): Additional utility functions for the BEM package
+
+## Visualization
+- [bem/show_result.py](mdc:bem/show_result.py): Visualization tools for simulation results
+  - Use `Result.view(prefix, electrode_name)` to visualize simulation results
+
+## External Libraries
+- [triangle/](mdc:triangle/): Triangulation libraries from Jonathan Shewchuk
+- [fastlap/](mdc:fastlap/): FastLap BEM implementation from MIT
+
+## Color Management
+- [bem/bemColors_lib/](mdc:bem/bemColors_lib/): Contains color definitions for electrode identification
+  - These colors are used to identify different electrodes in STL files

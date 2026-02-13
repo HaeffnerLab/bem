@@ -1,0 +1,6 @@
+Error Names,"Fitting DC on ROI using lstsq and manual Harmonic Basis to order 4, evaluated on ROI","Fitting RF on ROI using lstsq and manual Harmonic Basis to order 6, evaluated on ROI"
+Mean Square Error,3.1065011029034936e-12,7.583364938360212e-15
+Total Squared Error,2.037864723504692e-07,5.226530949167241e-10
+Mean Absolute Error,1.4068111478784383e-06,6.663183977506738e-08
+Total Absolute Error,0.0922868113008255,0.004592333029137419
+Mean Percentage Error,0.000122056677418,1.856699264885272e-07

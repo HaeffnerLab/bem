@@ -1,0 +1,21 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Integrated Photonics BEM Project Overview
+
+This is a Python package that simulates electrostatics for integrated photonic devices and ion traps using the boundary element method (BEM).
+
+## Key Components
+- **bem/**: Core implementation of the BEM simulation framework
+- **examples/**: Example simulations and workflows
+- **fastlap/**: Wraps the FastLap BEM and FMM implementation 
+- **utils/**: Utility functions and helpers
+- **triangle/**: Triangulation libraries and tools
+
+## Main Workflow
+1. Create a model in STL format
+2. Configure a BEM simulation job 
+3. Run the BEM electrostatics simulation
+4. Analyze the results (visualization, post-processing)

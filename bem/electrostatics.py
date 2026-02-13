@@ -48,7 +48,7 @@ class Result(object):
         """
         if self.configuration is not None:
             self.configuration.to_vtk(prefix)
-        sg = pv.ImageData(dims = self.grid.shape, 
+        sg = pv.ImageData(dimensions = self.grid.shape, 
                             spacing = self.grid.step, 
                             origin = self.grid.get_origin())
         for data_name in "potential field field_square".split():
