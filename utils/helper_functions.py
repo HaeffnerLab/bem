@@ -340,7 +340,7 @@ def load_soln(file):
     l1[126:147] = lmid[147:168]
     return l1
 
-def write_pickle(fin,fout,grid,strs):
+def write_pickle(fin, fout, grid, strs):
     #grid is the field grid pts that give the locations of each simulated potential point
     #fin is the filename of the of the input vtk sim file
     #fout is the filename of the pickle you want to save to
